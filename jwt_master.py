@@ -74,7 +74,10 @@ def decode_jwt(token):
         print(f"\n{signiture} :" + colored(" Signture", "green"))
         print("\n------------------------------------------------------")
         choice = input(colored("[+] Brute Force For Secret Key? (y/N) - > ", "red"))
+        print("\nNOTE: just press enter to use rockyou.txt")
         wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
+        if wordl == "":
+            wordl = "/usr/share/wordlists/rockyou.txt"
         if choice == "y":
             alg = re.search('(?:"alg":")(.*)(?:")', decoded1)
             alg = alg.group(1)
