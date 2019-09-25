@@ -108,7 +108,7 @@ def decode_jwt(token):
 
 
 def parse():
-    parser = argparse.ArgumentParser(description="python3 jwt_forger -d <JWT Token>\npython3 -f \"{'username':'admin','iat':'0'}\" -s <secret_key_word> -a <algorithm>")
+    parser = argparse.ArgumentParser(description="python3 jwt_master.py -d <JWT Token> " +colored("OR", "red") + " python3 jwt_master.py -f \"{'username':'admin','iat':'0'}\" -s <secret_key_word> -a <algorithm>")
     parser.add_argument('-d', dest="decode", help='The JWT token you want to decode')
     parser.add_argument('-s', dest="secret", help='The Secret for the JWT token creation')
     parser.add_argument('-f', dest="forge", help='Forge mode - enter the data you want to store in the forged token')
