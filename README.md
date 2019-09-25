@@ -22,7 +22,7 @@ and check how it is decoding it and brute forcing it.
 In That example we forge our own JWT token.  
 
 **What Can it Be Used For?**  
-If you have secret key you can use it to forge your own token 
+If you have the secret key you can use it to forge your own token 
 and authenticate as someone else!
 
 **Credits**  
