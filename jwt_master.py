@@ -82,7 +82,7 @@ def decode_jwt(token):
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
     except:
-        print(colored("[-] Wordlist could be wrong or one of the following errors.", "red"))
+        print(colored("\n[-] Wordlist could be wrong or one of the following errors.", "red"))
         time.sleep(1)
         print(colored("\n\n[-] Error: Try adding '==' or '=' before the dots in the values which weren't printed", "red"))
         print(colored("Example:\nFrom: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9\nTo: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9==", "green"))
