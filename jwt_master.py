@@ -52,7 +52,7 @@ def brute(word, variable, alg, token):
 
 def send_to_brute(wordlist, variable, alg, token):
     try:
-        print(f"Wordlist loaded from: '{wordlist}'")
+        print(f"Wordlist loaded from: '{wordlist}'\n")
         time.sleep(3)
         with open(wordlist, 'r') as list:
             global time1
