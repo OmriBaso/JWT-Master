@@ -57,13 +57,14 @@ def send_to_brute(wordlist, variable, alg, token):
         with open(wordlist, 'r') as list:
             global time1
             global i
+            global right
+            right = "0"
             i = 0
             time1 = time.time()
             for line in list:
                 word = line.strip()
                 t1 = Thread(target=brute, args=(word, variable, alg, token,))
                 t1.start()
-                right = "0"
                 if right == "1":
                     break
     except KeyboardInterrupt:
