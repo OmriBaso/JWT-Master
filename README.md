@@ -21,7 +21,9 @@ and check how it is decoding it and brute forcing it.
 `python3 jwt_forger.py -f "{'username':'admin','iat':'0'}" -s omri -a HS256`  
 In That example we forge our own JWT token.  
 
-
+**What Can it Be Used For?**  
+If you have secret key you can use it to forge your own token 
+and authenticate as someone else!
 
 **Credits**  
 Created and Written by j3wker AKA "Omri Baso"
