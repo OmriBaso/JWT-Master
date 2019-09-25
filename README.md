@@ -14,6 +14,7 @@ The Tool had Threading implemented which makes it super fast.
 
 **Example**  
 `python3 jwt_forger.py -d eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoiMCJ9.YuclVhzA4BX66YjyXtdo3RmgnJYWbJdDGEaSWb_Hq3w`  
+_____________________________________________________________________________________
 This JWT Token secret key is `omri` - add the word `omri` inside your wordlist  
 and check how it is decoding it and brute forcing it.  
 **Example2**  
