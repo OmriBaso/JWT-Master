@@ -66,14 +66,14 @@ def decode_jwt(token):
         ser = re.search('(.*)(?:\\.)(.*)(?:\\.)(.*)', token)
         decoded1 = base64.b64decode(ser.group(1))
         decoded1 = decoded1.decode("UTF-8")
-        print(f"\n{ser.group(1)} : {decoded1}")
+        print(f"\n{ser.group(1)} |" + colored(f" Type And Algorithm : {decoded1}", "green"))
         decoded2 = base64.b64decode(ser.group(2))
         decoded2 = decoded2.decode("UTF-8")
-        print(f"\n{ser.group(2)} : {decoded2}")
+        print(f"\n{ser.group(2)} |" + colored(f" Data : {decoded2}", "green"))
         signiture = ser.group(3)
-        print(f"\nsignture = {signiture}")
+        print(f"\n{signiture} :" + colored(" Signture", "green"))
         print("\n------------------------------------------------------")
-        choice = input("[+] Brute Force For Secret Key? (y/N) - > ")
+        choice = input(colored("[+] Brute Force For Secret Key? (y/N) - > ", "red"))
         wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
         if choice == "y":
             alg = re.search('(?:"alg":")(.*)(?:")', decoded1)
@@ -82,6 +82,8 @@ def decode_jwt(token):
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
     except:
+        print(colored("[-] Wordlist could be wrong or one of the following errors.", "red"))
+        time.sleep(1)
         print(colored("\n\n[-] Error: Try adding '==' or '=' before the dots in the values which weren't printed", "red"))
         print(colored("Example:\nFrom: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9\nTo: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9==", "green"))
 
@@ -100,8 +102,8 @@ def parse():
 
 def main():
     try:
-        creds()
         options = parse()
+        creds()
         key = options.secret
         dec = options.decode
         alg = options.algorithm
