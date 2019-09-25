@@ -44,7 +44,7 @@ def brute(word, variable, alg, token):
             print(colored(f"[+] Correct Secret Key Found!: {word}", "green"))
             end = time.time()
             timer = end - time1
-            print(f"[+] Tried: {i} Passwords in: {timer}\n")
+            print(f"[+] Tried: {i} Passwords in: {timer} Seconds\n")
             global right
             right = "1"
             print(colored("Now use -f in the script to create\nYour own forged JWT token!\n\n", "blue"))
@@ -86,6 +86,7 @@ def decode_jwt(token):
         print("\n------------------------------------------------------")
         choice = input(colored("[+] Brute Force For Secret Key? (y/N) - > ", "red"))
         if choice == "y":
+            print("\nNOTE: just press enter to use rockyou.txt")
             wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
             if wordl == "":
                 wordl = "/usr/share/wordlists/rockyou.txt"
@@ -95,7 +96,6 @@ def decode_jwt(token):
         else:
             print("\n\nPussy")
             exit(0)
-        print("\nNOTE: just press enter to use rockyou.txt")
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
     except Exception:
@@ -110,7 +110,7 @@ def parse():
     parser.add_argument('-d', dest="decode", help='The JWT token you want to decode')
     parser.add_argument('-s', dest="secret", help='The Secret for the JWT token creation')
     parser.add_argument('-f', dest="forge", help='Forge mode - enter the data you want to store in the forged token')
-    parser.add_argument('-a', dest="algorithm", help='The algorithm used for the JWT token')
+    parser.add_argument('-a', dest="algorithm", help='The algorithm used for the JWT token| Example: SH256')
 
     options = parser.parse_args()
 
