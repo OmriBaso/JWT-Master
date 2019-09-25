@@ -11,7 +11,8 @@ and it can also Brute Force and search for the secret key that was used to creat
 the JWT Token Provided in the `-d` flag.  
 The Tool had Threading implemented which makes it super fast.  
 
-_________________________________________________________________________________
+_________________________________________________________________________________  
+
 **Example**  
 `python3 jwt_forger.py -d eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoiMCJ9.YuclVhzA4BX66YjyXtdo3RmgnJYWbJdDGEaSWb_Hq3w`  
 --
