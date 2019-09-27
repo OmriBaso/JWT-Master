@@ -3,7 +3,7 @@ JWT Token Decoder - Forger - And Secret Key Brute Forcer
 
 **Must Download:**    
 use:  
-`pip3 install pyjwt` or `bash setup.sh` or `pip3 install -r requirements.txt`
+`pip3 install pyjwt` or `bash setup.sh` or `pip3 install -r requirements.txt`  
 NOTE: If installing with pip3 also execute `pip3 install jwt`
 
 **About The Tool**    
