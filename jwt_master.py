@@ -83,7 +83,7 @@ def decode_jwt(token):
         decoded1 = base64.b64decode(ser.group(1) + b64padding(ser.group(1)))
         decoded1 = decoded1.decode("UTF-8")
         print(f"\n{ser.group(1)} |" + colored(f" Type And Algorithm : {decoded1}", "green"))
-        decoded2 = base64.b64decode(ser.group(1) + b64padding(ser.group(2)))
+        decoded2 = base64.b64decode(ser.group(2) + b64padding(ser.group(2)))
         decoded2 = decoded2.decode("UTF-8")
         print(f"\n{ser.group(2)} |" + colored(f" Data : {decoded2}", "green"))
         signiture = ser.group(3)
