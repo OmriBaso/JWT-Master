@@ -70,23 +70,27 @@ def send_to_brute(wordlist, variable, alg, token):
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
 
+        
+def b64padding(str):                                                                                                                                                      
+    return '='*((4 - len(str)%4)%4)
 
+  
 def decode_jwt(token):
-    try:
+    try:          
         print("[+] Decoding")
         time.sleep(1)
         ser = re.search('(.*)(?:\\.)(.*)(?:\\.)(.*)', token)
-        decoded1 = base64.b64decode(ser.group(1))
+        decoded1 = base64.b64decode(ser.group(1) + b64padding(ser.group(1)))
         decoded1 = decoded1.decode("UTF-8")
         print(f"\n{ser.group(1)} |" + colored(f" Type And Algorithm : {decoded1}", "green"))
-        decoded2 = base64.b64decode(ser.group(2))
+        decoded2 = base64.b64decode(ser.group(2) + b64padding(ser.group(2)))
         decoded2 = decoded2.decode("UTF-8")
         print(f"\n{ser.group(2)} |" + colored(f" Data : {decoded2}", "green"))
         signiture = ser.group(3)
         print(f"\n{signiture} :" + colored(" Signture", "green"))
         print("\n------------------------------------------------------")
         choice = input(colored("[+] Brute Force For Secret Key? (y/N) - > ", "red"))
-        if choice == "y":
+        if choice == "y":        
             print("\nNOTE: just press enter to use rockyou.txt")
             wordl = input(colored("[+] Enter wordlist FULL PATH(!) - > ", "blue"))
             print("---------------------------------------------")
@@ -101,11 +105,8 @@ def decode_jwt(token):
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
     except Exception:
-        print(colored("\n[-] Wordlist could be wrong or one of the following errors.", "red"))
+        print(colored("\n[-] Please check your wordlist path or contents.", "red"))
         time.sleep(1)
-        print(colored("\n\n[-] Error: Try adding '==' or '=' before the dots in the values which weren't printed", "red"))
-        print(colored("Example:\nFrom: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9\nTo: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9==", "green"))
-
 
 def parse():
     parser = argparse.ArgumentParser(description="python3 jwt_master.py -d <JWT Token> " +colored("OR", "red") + " python3 jwt_master.py -f \"{'username':'admin','iat':'0'}\" -s <secret_key_word> -a <algorithm>")
