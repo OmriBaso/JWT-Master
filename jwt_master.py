@@ -62,6 +62,7 @@ def brute(word, variable, alg, token, lock):
 def send_to_brute(wordlist, variable, alg, token, lock):
     try:
         print(f"Wordlist loaded from: '{wordlist}'\n")
+        print("[+] Cracking Started")
         with open(wordlist, 'r') as listi:
             global time1
             global proccess_list
