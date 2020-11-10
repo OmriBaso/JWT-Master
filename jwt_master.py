@@ -8,9 +8,10 @@ from termcolor import colored
 from multiprocessing import Process, Lock, Manager
 import time
 manager = Manager()
-right = manager.list()
+right_value = manager.list()
 lock = Lock()
 i = 0
+proccess_list = []
 x = """
   ██╗          ██╗██████╗ ██╗    ██╗██╗  ██╗███████╗██████╗      ██╗  
  ██╔╝          ██║╚════██╗██║    ██║██║ ██╔╝██╔════╝██╔══██╗     ╚██╗ 
@@ -39,15 +40,15 @@ def forge(data, secret, alg):
 def brute(word, variable, alg, token, lock):
         variable = eval(variable)
         global i
-        global right
+        global right_value
         print(colored(f"Trying: {word}", "red"), end="\r")
         new_jwt = jwt.encode(variable, key=word, algorithm=alg)
         new_jwt = new_jwt.decode("UTF-8")
         if token == new_jwt:
-            right.append(1)
+            right_value.append(1)
+            end = time.time()
+            timer = end - time1
             with lock:
-                end = time.time()
-                timer = end - time1
                 print(colored(f"\n\n[+] Correct Secret Key Found!: {word}", "green"))
                 print(f"\n[+] Tried: {i} Passwords in: {timer} Seconds\n")
                 print(colored("Now use -f in the script to create\nYour own forged JWT token!\n", "blue"))
@@ -58,18 +59,20 @@ def brute(word, variable, alg, token, lock):
 def send_to_brute(wordlist, variable, alg, token, lock):
     try:
         print(f"Wordlist loaded from: '{wordlist}'\n")
-        with open(wordlist, 'r') as list:
+        with open(wordlist, 'r') as listi:
             global time1
-            global right
+            global proccess_list
+            global right_value
             global i
             time1 = time.time()
-            for line in list:
+            for line in listi:
                 word = line.strip()
                 i += 1
-                if 1 in right:
+                if 1 in right_value:
                     break
                 else:
                     t1 = Process(target=brute, args=(word, variable, alg, token, lock, ))
+                    proccess_list.append(t1)
                     t1.start()
 
 
@@ -85,7 +88,6 @@ def b64padding(str):
 def decode_jwt(token):
     try:          
         print("[+] Decoding")
-        time.sleep(1)
         ser = re.search('(.*)(?:\\.)(.*)(?:\\.)(.*)', token)
         decoded1 = base64.b64decode(ser.group(1) + b64padding(ser.group(1)))
         decoded1 = decoded1.decode("UTF-8")
@@ -143,3 +145,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    for process in proccess_list:
+        process.join()
