@@ -5,7 +5,7 @@ import base64
 import re
 import argparse
 from termcolor import colored
-from threading import Thread
+from multiprocessing import Process
 import time
 
 x = """
@@ -34,6 +34,7 @@ def forge(data, secret, alg):
 
 
 def brute(word, variable, alg, token):
+        time.sleep(10)
         variable = eval(variable)
         global i
         global right
@@ -63,7 +64,7 @@ def send_to_brute(wordlist, variable, alg, token):
             time1 = time.time()
             for line in list:
                 word = line.strip()
-                t1 = Thread(target=brute, args=(word, variable, alg, token,))
+                t1 = Process(target=brute, args=(word, variable, alg, token,))
                 t1.start()
                 if right == "1":
                     break
@@ -96,7 +97,7 @@ def decode_jwt(token):
             print("---------------------------------------------")
             if wordl == "":
                 wordl = "/usr/share/wordlists/rockyou.txt"
-            alg = re.search('(?:"alg":")(.*)(?:")', decoded1)
+            alg = re.search('(?:"alg":")(.*?)(?:")', decoded1)
             alg = alg.group(1)
             send_to_brute(wordl, decoded2, alg, token)
         else:
@@ -104,9 +105,6 @@ def decode_jwt(token):
             exit(0)
     except KeyboardInterrupt:
         print(colored("\n\n[-] Ctrl + C Detected Qutting program", "red"))
-    except Exception:
-        print(colored("\n[-] Please check your wordlist path or contents.", "red"))
-        time.sleep(1)
 
 def parse():
     parser = argparse.ArgumentParser(description="python3 jwt_master.py -d <JWT Token> " +colored("OR", "red") + " python3 jwt_master.py -f \"{'username':'admin','iat':'0'}\" -s <secret_key_word> -a <algorithm>")
