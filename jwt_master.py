@@ -5,10 +5,13 @@ import base64
 import re, sys
 import argparse
 from termcolor import colored
-from multiprocessing import Process, Lock, Manager
+#from multiprocessing import Process, Lock, Manager
+from threading import Thread as Process
+from threading import Lock
 import time
-manager = Manager()
-right_value = manager.list()
+#manager = Manager()
+#right_value = manager.list()
+right_value = []
 lock = Lock()
 i = 0
 proccess_list = []
@@ -41,7 +44,7 @@ def brute(word, variable, alg, token, lock):
         variable = eval(variable)
         global i
         global right_value
-        print(colored(f"Trying: {word}", "red"), end="\r")
+        #print(colored(f"Trying: {word}", "red"), end="\r")
         new_jwt = jwt.encode(variable, key=word, algorithm=alg)
         new_jwt = new_jwt.decode("UTF-8")
         if token == new_jwt:
@@ -71,9 +74,10 @@ def send_to_brute(wordlist, variable, alg, token, lock):
                 if 1 in right_value:
                     break
                 else:
-                    t1 = Process(target=brute, args=(word, variable, alg, token, lock, ))
-                    proccess_list.append(t1)
-                    t1.start()
+                    #t1 = Process(target=brute, args=(word, variable, alg, token, lock, ))
+                    #proccess_list.append(t1)
+                    #t1.start()
+                    brute(word ,variable, alg,token, lock)
 
 
 
