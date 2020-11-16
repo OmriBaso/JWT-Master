@@ -36,7 +36,7 @@ def creds():
 
 def forge(data, secret, alg):
     jwt_token = jwt.encode(data, key=secret, algorithm=alg)
-    jwt_token = jwt_token.decode("UTF-8")
+    jwt_token = jwt_token.decode("ISO-8859-1")
     print("Your new token is ready!:\n" + colored(jwt_token, "green"))
 
 
@@ -46,7 +46,7 @@ def brute(word, variable, alg, token, lock):
         global right_value
         #print(colored(f"Trying: {word}", "red"), end="\r")
         new_jwt = jwt.encode(variable, key=word, algorithm=alg)
-        new_jwt = new_jwt.decode("UTF-8")
+        new_jwt = new_jwt.decode("ISO-8859-1")
         if token == new_jwt:
             right_value.append(1)
             end = time.time()
@@ -63,14 +63,14 @@ def send_to_brute(wordlist, variable, alg, token, lock):
     try:
         print(f"Wordlist loaded from: '{wordlist}'\n")
         print("[+] Cracking Started")
-        with open(wordlist, 'r') as listi:
+        with open(wordlist, 'rb') as listi:
             global time1
             global proccess_list
             global right_value
             global i
             time1 = time.time()
             for line in listi:
-                word = line.strip()
+                word = line.strip().decode("ISO-8859-1")
                 i += 1
                 if 1 in right_value:
                     break
